@@ -16,8 +16,7 @@ public class Point {
      * @param y second number value
      * @param z third number value
      */
-   public Point(double x, double y, double z)
-   {
+   public Point(double x, double y, double z) {
         _xyz = new Double3(x,y,z);
    }
 
@@ -51,7 +50,12 @@ public class Point {
        return Math.sqrt(distanceSquared(other));
    }
 
-   public vector subtract(Point other){///////////////////////////////////////////////////////////////////////////////////////
-
+    /**
+     * return vector from other point to this point
+     * @param other
+     * @return
+     */
+   public Vector subtract(Point other){
+       return  new Vector(_xyz.subtract(other._xyz));
    }
 }
