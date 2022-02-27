@@ -1,5 +1,6 @@
 package primitives;
-import Math;
+
+import java.util.Objects;
 
 /**
  * This class  represents a point in a three-dimensional universe
@@ -58,4 +59,64 @@ public class Point {
    public Vector subtract(Point other){
        return  new Vector(_xyz.subtract(other._xyz));
    }
+
+    /**
+     * add vector to the point
+     * @param v vector to add
+     * @return
+     */
+   public Point add(Vector v){
+       return new Point(_xyz.add(v._xyz));
+   }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null ) return false;
+        if(!(obj instanceof Point) )return false;
+        Point other = (Point) obj;
+        return _xyz.equals(other._xyz);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(_xyz);
+    }
+
+    @Override
+    public String toString() {
+        return "Point{" +
+                "_xyz=" + _xyz +
+                '}';
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
