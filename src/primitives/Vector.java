@@ -23,7 +23,7 @@ public class Vector extends Point {
      * @param double3
      */
     Vector(Double3 double3) {
-        super(double3);//לשאול את יואל
+        super(double3);
         if (_xyz.equals(Double3.ZERO)) {
             throw new IllegalArgumentException("vector cant be zero vector");
         }
@@ -53,7 +53,9 @@ public class Vector extends Point {
      * @return
      */
     public Vector crossProduct(Vector other) {
-        return (new Vector(_xyz.d2 * other._xyz.d3 - _xyz.d3 * other._xyz.d2, _xyz.d3 * other._xyz.d1 - _xyz.d1 * other._xyz.d3, _xyz.d1 * other._xyz.d2 - _xyz.d2 * other._xyz.d1));
+        return (new Vector(_xyz.d2 * other._xyz.d3 - _xyz.d3 * other._xyz.d2,
+                _xyz.d3 * other._xyz.d1 - _xyz.d1 * other._xyz.d3,
+                _xyz.d1 * other._xyz.d2 - _xyz.d2 * other._xyz.d1));
     }
 
     /**

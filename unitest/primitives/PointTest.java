@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class PointTest {
 
-    @Test
+    // TC01: Test that distance squared is proper (orthogonal vectors taken
     void distanceSquared() {
     }
 
@@ -20,6 +20,7 @@ class PointTest {
 
     @Test
     void subtract() {
+        assertEquals(new Vector (1,1,1) ,new Point(2, 3, 4).subtract(new Point(1, 2, 3)),"Point - Point does not work correctly");
     }
 
     /**
