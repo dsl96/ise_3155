@@ -27,11 +27,17 @@ public class Plane implements Geometry {
      */
     public Plane(Point p1, Point p2, Point p3) {
         p0 = p1;
-        normal = p1.subtract(p2).crossProduct(p1.subtract(p3)).normalize();
+
+        try { // try for case the ctor get all point on the same vector or at least two point are the same
+            normal = p1.subtract(p2).crossProduct(p1.subtract(p3)).normalize();
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("your points are on the same vector");
+        }
     }
 
     /**
      * get the normal
+     *
      * @return
      */
     public Vector getNormal() {
@@ -40,9 +46,10 @@ public class Plane implements Geometry {
 
     /**
      * get point
+     *
      * @return
      */
-    public Point getPoint(){
+    public Point getPoint() {
         return p0;
     }
 

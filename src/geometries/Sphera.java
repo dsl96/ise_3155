@@ -29,9 +29,15 @@ public class Sphera implements Geometry {
         return radius;
     }
 
+    /**
+     * get point on surface of the sphera
+     * and retur the normal
+     * @param point
+     * @return
+     */
     @Override
     public Vector getNormal(Point point) {
-        return null;
+        return point.subtract(getCenter()).normalize();
     }
 
     @Override
