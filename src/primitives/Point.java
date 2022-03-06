@@ -4,7 +4,6 @@ import java.util.Objects;
 
 /**
  * This class  represents a point in a three-dimensional universe
- *
  */
 public class Point {
 
@@ -25,9 +24,10 @@ public class Point {
     /**
      * Constructor to initialize point 3D
      * get "Double3"
+     *
      * @param double3
      */
-    public Point(Double3 double3){
+    public Point(Double3 double3) {
         this(double3.d1, double3.d2, double3.d3);
     }
 
@@ -38,9 +38,9 @@ public class Point {
      * @return
      */
     public double distanceSquared(Point other) {
-        return this._xyz.d1 - other._xyz.d1 * this._xyz.d1 - other._xyz.d1 +
-                this._xyz.d2 - other._xyz.d2 * this._xyz.d2 - other._xyz.d2 +
-                this._xyz.d2 - other._xyz.d2 * this._xyz.d2 - other._xyz.d2;
+        return (this._xyz.d1 - other._xyz.d1) * (this._xyz.d1 - other._xyz.d1) +
+                (this._xyz.d2 - other._xyz.d2) * (this._xyz.d2 - other._xyz.d2) +
+                (this._xyz.d3 - other._xyz.d3) * (this._xyz.d3 - other._xyz.d3);
     }
 
     /**

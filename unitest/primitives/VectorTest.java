@@ -8,7 +8,7 @@ import static java.lang.System.out;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * tests for primitives.Vector
+ * tests for primitives.Vector class
  */
 class VectorTest {
 
