@@ -10,6 +10,19 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class PointTest {
 
+    //Point p1 = new Point(1, 2, 3);
+
+
+
+
+
+
+		//if (!(p1.add(new Vector(-1, -2, -3)).equals(new Point(0, 0, 0))))
+        //    out.println("ERROR: Point + Vector does not work correctly");
+
+
+
+    @Test
     // TC01: Test that distance squared is proper (orthogonal vectors taken
     void distanceSquared() {
     }
