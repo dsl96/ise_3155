@@ -7,6 +7,9 @@ import static primitives.Util.*;
 import static java.lang.System.out;
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * tests for primitives.Vector
+ */
 class VectorTest {
 
     //Vectors for tests
@@ -16,34 +19,52 @@ class VectorTest {
 
     Vector vr = v1.crossProduct(v3);
 
+    /**
+     * test ctors
+     */
     @Test
     void testCtor() {
-        // test zero vector
+        // =============== Boundary Values Test ==================
+
+        // test zero vector for ctor get 3 doubles
         assertThrows(IllegalArgumentException.class,
                 () -> new Vector(0, 0, 0),
                 "ERROR: zero vector does not throw an exception");
 
+        // test zero vector for ctor get Double3
         assertThrows(IllegalArgumentException.class,
                 () -> new Vector(new Double3(0, 0, 0)),
                 "ERROR: zero vector does not throw an exception");
     }
 
-
+    /**
+     * Test to mult scale with vector
+     */
     @Test
-    void scale() {
+    void testScale() {
+        // ============ Equivalence Partitions Tests ==============
+
         //Test for scale()
         assertEquals(v2, v1.scale(-2), "ERROR: scale() wrong result vector");
-
     }
 
+    /**
+     * Test to add vector to vector
+     */
     @Test
-    void add() {
+    void testAdd() {
+        // ============ Equivalence Partitions Tests ==============
+
         //Test for add()
         assertEquals(new Vector(1, 5, 1), v1.add(v3), "ERROR: add() wrong result vector");
     }
 
+    /**
+     * Test for cross product
+     */
     @Test
-    void crossProduct() {
+    void testCrossProduct() {
+        // ============ Equivalence Partitions Tests ==============
 
         // test zero vector same direction vector
         assertThrows(IllegalArgumentException.class,
@@ -57,52 +78,65 @@ class VectorTest {
         //test if the vector is orthogonal
         assertTrue(isZero(vr.dotProduct(v1)) && isZero(vr.dotProduct(v3)),
                 "ERROR: crossProduct() result is not orthogonal to its operands");
-
     }
 
+    /**
+     * Test for dot product
+     */
     @Test
     void testDotProduct() {
+        // ============ Equivalence Partitions Tests ==============
+
+        // test value of dotProduct()
+        assertTrue(isZero(v1.dotProduct(v2) + 28), "ERROR: dotProduct() wrong value");
+
+        // =============== Boundary Values Test ==================
 
         // test zero for orthogonal vector
         assertTrue(isZero(v1.dotProduct(v3)), "ERROR: dotProduct() for orthogonal vectors is not zero");
-
-
-        //
-        assertTrue(isZero(v1.dotProduct(v2) + 28), "ERROR: dotProduct() wrong value");
-
-
     }
 
+    /**
+     * Test to normalize vector
+     */
     @Test
-    void normalize() {
+    void testNormalize() {
         Vector u = v1.normalize();
+        // ============ Equivalence Partitions Tests ==============
 
         //test for length of normal
         assertTrue(isZero(u.length() - 1), "ERROR: the normalized vector is not a unit vector");
 
+        // test that the vectors are co direction
+        assertTrue(v1.dotProduct(u) > 0,
+                "ERROR: the normalized vector is opposite to the original one");
 
         // test that the vectors are co-lined
         assertThrows(IllegalArgumentException.class,
                 () -> v1.crossProduct(u),
                 "ERROR: the normalized vector is not parallel to the original one");
-
-        // test that the vectors are co direction
-        assertTrue(v1.dotProduct(u) < 0,
-                "ERROR: the normalized vector is opposite to the original one");
-
     }
 
+    /**
+     * Test to get the length square of vector
+     */
     @Test
-    void lengthSquared() {
-        // test lengthSquared
+    void testLengthSquared() {
+        // ============ Equivalence Partitions Tests ==============
+
+        // test lengthSquared()
         assertTrue(isZero(v1.lengthSquared() - 14),
                 "ERROR: lengthSquared() wrong value");
     }
 
+    /**
+     * Test to get the length of vector
+     */
     @Test
-    void length() {
+    void testLength() {
+        // ============ Equivalence Partitions Tests ==============
 
-        // test length
+        // test length()
         assertTrue(isZero(new Vector(0, 3, 4).length() - 5),
                 "ERROR: length() wrong value");
     }
