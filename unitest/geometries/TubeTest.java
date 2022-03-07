@@ -7,12 +7,18 @@ import primitives.Vector;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test method for  geometries.Tube
+ */
 class TubeTest {
 
+    /**
+     * Test method for  getNormal(Point)
+     */
     @Test
-    void getNormal() {
+    void testGetNormal() {
         Tube tube = new Tube(  new Ray(new Point(0, 0, 1), new Vector(0, 1, 0)),1.0);
-
+        // ============ Equivalence Partitions Tests ==============
         assertEquals( new Vector(0, 0, 1), tube.getNormal(new Point(0, 0.5, 2)),"ERROR: Bad normal to tube");
 
         // =============== Boundary Values Tests ==================

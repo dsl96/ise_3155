@@ -4,13 +4,16 @@ import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
 
-public class Cylinder extends Tube{
+import static primitives.Util.*;
+
+public class Cylinder extends Tube {
 
     private double height;
 
     /**
      * ctor get axis ray and positive radius
-     *  @param axisRay
+     *
+     * @param axisRay
      * @param radius
      * @param height
      */
@@ -27,7 +30,20 @@ public class Cylinder extends Tube{
 
     @Override
     public Vector getNormal(Point point) {
-        return null;
+
+        Point p0 = getAxisRay().getP0();
+        Vector dir = getAxisRay().getDir();
+        Point pTop = p0.add(dir.scale(getHeight()));
+
+        //if the point is at the top of the cylinder
+        if (point.equals(pTop) || isZero(dir.dotProduct(point.subtract(pTop))))
+            return dir;
+
+        //if the point is at the base of the cylinder
+        if (point.equals(p0) || isZero(dir.dotProduct(point.subtract(p0))))
+            return dir.scale(-1);
+
+        return super.getNormal(point);
     }
 
     @Override
