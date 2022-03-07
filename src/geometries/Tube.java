@@ -3,6 +3,7 @@ package geometries;
 import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
+import static primitives.Util.*;
 
 public class Tube implements Geometry {
 
@@ -30,6 +31,32 @@ public class Tube implements Geometry {
     }
     @Override
     public Vector getNormal(Point point) {
-        return null;
+
+        //get the center of the tube
+        Point _0 = axisRay.getP0();
+        //get the vector direction of the tube
+        Vector _v= axisRay.getDir();
+
+        //(p-p0) * _v
+        double _t = point.subtract(_0).dotProduct(_v);
+
+        if(!isZero(_t))//if it's close to 0, we'll get ZERO vector exception
+            _0= _0.add(_v.scale(_t));
+
+        return point.subtract(_0).normalize();
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

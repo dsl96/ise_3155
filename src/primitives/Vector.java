@@ -35,7 +35,7 @@ public class Vector extends Point {
      * @param rhs scalar
      * @return
      */
-    Vector scale(double rhs) {
+    public Vector scale(double rhs) {
         return new Vector(_xyz.scale(rhs));
     }
 

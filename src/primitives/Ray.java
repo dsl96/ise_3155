@@ -26,6 +26,15 @@ public class Ray {
         return this.dir.equals(other.dir) && this.p0.equals(other.p0);
     }
 
+    public Point getP0() {
+        return p0;
+    }
+
+    public Vector getDir() {
+        return dir;
+    }
+
+
     @Override
     public String toString() {
         return "Ray{" +
