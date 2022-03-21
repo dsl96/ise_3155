@@ -59,7 +59,7 @@ public class Sphere implements Geometry {
         Vector u;
 
         try {
-            u = center.subtract(p0);   // p0 == center the ray starte from the center of the sphere
+            u = center.subtract(p0);   // p0 == center the ray start from the center of the sphere
         } catch (IllegalArgumentException e) {
             return List.of( ray.getTargetPoint(this.radius));
         }
@@ -68,22 +68,25 @@ public class Sphere implements Geometry {
         double dSquared = u.lengthSquared() - tm * tm;
         double thSquared = alignZero(this.radius * this.radius - dSquared);
 
-        if (thSquared <= 0) return null;
+        if (thSquared <= 0) return null;//no intersections
 
         double th = alignZero(Math.sqrt(thSquared));
-        if (th == 0) return null;
+        if (th == 0) return null;//ray tangent to sphere
 
         double t1 = alignZero(tm - th);
         double t2 = alignZero(tm + th);
 
+        //ray starts after sphere
         if (alignZero(t1) <= 0 && alignZero(t2) <= 0) return null;
 
+        //2 intersections
         if (alignZero(t1) > 0 && alignZero(t2) > 0) {
             return List.of(
                     ray.getTargetPoint(t1)
                     ,ray.getTargetPoint(t2)); //P1 , P2
         }
 
+        //1 intersection
         if (alignZero(t1) > 0)
             return List.of(ray.getTargetPoint(t1));
         else

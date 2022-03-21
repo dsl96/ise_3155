@@ -37,7 +37,7 @@ class SphereTest {
 
         // check correct normal
         assertEquals(new Vector(1, 0, 0), s.getNormal(new Point(3.5, 0, 0))
-                , "ERROR: getNormal() worng result");
+                , "ERROR: getNormal() wrong result");
     }
 
     /**
@@ -136,29 +136,5 @@ class SphereTest {
         // TC19: Ray'sphere line is outside, ray is orthogonal to ray start to sphere'sphere center line
         assertNull( sphere.findIntersections(new Ray(new Point(-0.5,0,0), new Vector(0,1, 0))),
                 "ERROR Ray's line is outside");
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 }

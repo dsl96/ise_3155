@@ -33,7 +33,7 @@ public class Ray {
 
     /**
      * get point on the ray
-     * @param length from the start of the ray
+     * @param length distance from the start of the ray
      * @return new Point3D
      */
     public Point getTargetPoint(double length) {
