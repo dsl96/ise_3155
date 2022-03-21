@@ -14,7 +14,6 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class TriangleTest {
 
-
     /**
      * Test method for  getNormal(Point)
      */
