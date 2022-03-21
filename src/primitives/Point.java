@@ -21,6 +21,10 @@ public class Point {
         _xyz = new Double3(x, y, z);
     }
 
+    public double getX() {
+        return _xyz.d1;
+    }
+
     /**
      * Constructor to initialize point 3D
      * get "Double3"
