@@ -19,7 +19,8 @@ class PointTest {
     /**
      * test distance Squared
      */
-    void distanceSquared() {
+    @Test
+    void TestDistanceSquared() {
         // ============ Equivalence Partitions Tests ==============
 
         //test distanceSquared() result
@@ -30,7 +31,7 @@ class PointTest {
      * test distance
      */
     @Test
-    void distance() {
+    void TestDistance() {
         // ============ Equivalence Partitions Tests ==============
 
         //test distance() result
@@ -41,7 +42,7 @@ class PointTest {
      * test substract method
      */
     @Test
-    void subtract() {
+    void TestSubtract() {
         // ============ Equivalence Partitions Tests ==============
 
         //test subtract() result

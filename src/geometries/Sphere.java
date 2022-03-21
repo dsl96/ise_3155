@@ -1,9 +1,12 @@
 package geometries;
 
 import primitives.Point;
+import primitives.Ray;
 import primitives.Vector;
 
-public class Sphera implements Geometry {
+import java.util.List;
+
+public class Sphere implements Geometry {
 
     private Point center;
     private double radius;
@@ -13,7 +16,7 @@ public class Sphera implements Geometry {
      * @param center
      * @param radius
      */
-    Sphera(Point center, double radius) {
+    Sphere(Point center, double radius) {
         if (radius <= 0)
             throw new IllegalArgumentException("radius cannt be negative or zero");
 
@@ -46,5 +49,10 @@ public class Sphera implements Geometry {
                 "center=" + center +
                 ", radius=" + radius +
                 '}';
+    }
+
+    @Override
+    public List<Point> findIntersections(Ray ray) {
+        return null;
     }
 }
