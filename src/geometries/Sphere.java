@@ -17,7 +17,7 @@ public class Sphere implements Geometry {
      * @param center
      * @param radius
      */
-    Sphere(Point center, double radius) {
+    public Sphere(Point center, double radius) {
         if (radius <= 0)
             throw new IllegalArgumentException("radius cannt be negative or zero");
 
