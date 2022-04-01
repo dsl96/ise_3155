@@ -18,7 +18,7 @@ class CameraTest {
 
 	/**
 	 * Test method for
-	 * {@link elements.Camera#constructRay(int, int, int, int)}.
+	 * {@link lighting.Camera#constructRay(int, int, int, int)}.
 	 */
 	@Test
 	void testConstructRay() {
