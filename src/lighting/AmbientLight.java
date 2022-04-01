@@ -1,4 +1,4 @@
-package elements;
+package lighting;
 
 import primitives.*;
 
@@ -26,7 +26,7 @@ public class AmbientLight {
     public AmbientLight(){
             this.intensity = Color.BLACK;
     }
-
+    // ***************** getter ********************** //
     public Color getIntensity() {
         return intensity;
     }

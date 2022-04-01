@@ -2,6 +2,8 @@ package renderer;
 
 import primitives.*;
 
+import java.util.MissingResourceException;
+
 import static primitives.Util.isZero;
 
 /**
@@ -15,6 +17,8 @@ public class Camera {
     private double vpHeight;
     private double vpWidth;
     private double distance;
+    private ImageWriter imageWriter;
+    private RayTracerBase rayTracerBase;
 
     public Camera(Point p0, Vector vTo, Vector vUp) {
         if (!isZero(vUp.dotProduct(vTo)))
@@ -26,8 +30,11 @@ public class Camera {
         this.p0 = p0;
     }
 
+    /******************** setters *********************/
+
     /**
      * set width and height of the screen
+     * return this for builder
      *
      * @param vpWidth
      * @param vpHeight
@@ -45,6 +52,7 @@ public class Camera {
 
     /**
      * set distance from camera to screen
+     * return this for builder
      *
      * @param distance
      * @return
@@ -57,6 +65,32 @@ public class Camera {
         return this;
     }
 
+    /**
+     * set Ray Tracer Base
+     * return this for builder
+     *
+     * @param rayTracerBase
+     * @return
+     */
+    public Camera setRayTracerBase(RayTracerBase rayTracerBase) {
+        this.rayTracerBase = rayTracerBase;
+        return this;
+    }
+
+    /**
+     * set Image Writer
+     * return this for builder
+     *
+     * @param imageWriter
+     * @return
+     */
+    public Camera setImageWriter(ImageWriter imageWriter) {
+        this.imageWriter = imageWriter;
+        return this;
+    }
+
+
+    /************************** getters *******************/
 
     public double getVpHeight() {
         return vpHeight;
@@ -78,11 +112,13 @@ public class Camera {
         double Rx = vpWidth / nX;
 
         double xJ = Rx * (j - ((nX - 1) / 2.0));
-        double yI = -Ry * (i - ((nY - 1) / 2.0)) ;
+        double yI = -Ry * (i - ((nY - 1) / 2.0));
 
-        if ( !isZero(xJ)) Pij = Pij.add(vRight.scale(xJ));
-        if ( !isZero(yI)) Pij = Pij.add(vUp.scale(yI));
+        if (!isZero(xJ)) Pij = Pij.add(vRight.scale(xJ));
+        if (!isZero(yI)) Pij = Pij.add(vUp.scale(yI));
 
         return new Ray(p0, Pij.subtract(p0));
     }
+
+
 }

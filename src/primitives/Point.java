@@ -7,6 +7,11 @@ import java.util.Objects;
  */
 public class Point {
 
+    /**
+     * Zero Point (0,0,0)
+     */
+    public static final Point ZERO = new Point(Double3.ZERO);
+
     Double3 _xyz;
 
     /**

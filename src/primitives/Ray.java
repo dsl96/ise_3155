@@ -1,6 +1,8 @@
 package primitives;
 
+import java.util.List;
 import java.util.Objects;
+
 import static primitives.Util.*;
 
 public class Ray {
@@ -33,17 +35,32 @@ public class Ray {
 
     /**
      * get point on the ray
+     *
      * @param length distance from the start of the ray
      * @return new Point3D
      */
     public Point getTargetPoint(double length) {
-       return isZero(length)? p0 : p0.add(dir.scale(length));
+        return isZero(length) ? p0 : p0.add(dir.scale(length));
     }
 
     public Vector getDir() {
         return dir;
     }
 
+    /**
+     * this function get list of points and return the closest point
+     * to po of the ray
+     * @param points
+     * @return
+     */
+    public Point findClosestPoint(List<Point> points) {
+        if (points == null || points.isEmpty())
+            return null;
+
+         return points.stream().
+                 min((p1,p2)-> Double.compare(p0.distanceSquared(p1),p0.distanceSquared(p2))).get();
+
+    }
 
     @Override
     public String toString() {
