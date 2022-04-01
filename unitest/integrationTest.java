@@ -108,10 +108,4 @@ public class integrationTest {
         shape = new Triangle(new Point(0,20,-2),new Point(1,-1,-2),new Point(-1,-1,-2));
         assertEquals(2, sumIntersections(camera, shape), "ERROR triangle standing in front the vp (2 point) ");
     }
-
-
-
-
-
-
 }
