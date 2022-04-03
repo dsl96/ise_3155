@@ -8,12 +8,17 @@ import java.util.List;
 
 import static primitives.Util.*;
 
+/**
+ * Cylinder class represents cylinder in 3D Cartesian coordinate
+ * system
+ */
 public class Cylinder extends Tube {
 
     private double height;
 
+    // ***************** Constructors ********************** //
     /**
-     * ctor get axis ray and positive radius
+     * constructor get axis ray and positive radius
      *
      * @param axisRay
      * @param radius
@@ -26,9 +31,13 @@ public class Cylinder extends Tube {
         this.height = height;
     }
 
+    // ***************** Getters ********************** //
+
     public double getHeight() {
         return height;
     }
+
+    // ***************** Operations ******************** //
 
     @Override
     public Vector getNormal(Point point) {

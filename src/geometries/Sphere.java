@@ -7,13 +7,18 @@ import static primitives.Util.*;
 
 import java.util.List;
 
+/**
+ * lass Sphere represents sphere in 3D space
+ */
 public class Sphere implements Geometry {
 
     private Point center;
     private double radius;
 
+    // ***************** Constructors ********************** //
+
     /**
-     *  ctor get center and radius and create sphera
+     *  constructor get center and radius and create sphere
      * @param center
      * @param radius
      */
@@ -25,6 +30,8 @@ public class Sphere implements Geometry {
         this.center = center;
     }
 
+    // ***************** Getters ********************** //
+
     public Point getCenter() {
         return center;
     }
@@ -33,23 +40,11 @@ public class Sphere implements Geometry {
         return radius;
     }
 
-    /**
-     * get point on surface of the sphera
-     * and retur the normal
-     * @param point
-     * @return
-     */
+    // ***************** Operations ******************** //
+
     @Override
     public Vector getNormal(Point point) {
         return point.subtract(getCenter()).normalize();
-    }
-
-    @Override
-    public String toString() {
-        return "Sphera{" +
-                "center=" + center +
-                ", radius=" + radius +
-                '}';
     }
 
     @Override
@@ -91,5 +86,13 @@ public class Sphere implements Geometry {
             return List.of(ray.getTargetPoint(t1));
         else
             return List.of(ray.getTargetPoint(t2));
+    }
+
+    @Override
+    public String toString() {
+        return "Sphera{" +
+                "center=" + center +
+                ", radius=" + radius +
+                '}';
     }
 }

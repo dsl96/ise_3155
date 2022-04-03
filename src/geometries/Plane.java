@@ -8,14 +8,19 @@ import java.util.List;
 
 import static primitives.Util.*;
 
-
+/**
+ * Plane class represents two-dimensional plane in 3D Cartesian coordinate
+ * system
+ */
 public class Plane implements Geometry {
 
     private Point p0;
     private Vector normal;
 
+    // ***************** Constructors ********************** //
+
     /**
-     * ctor get normal and point
+     * constructor get normal and point
      *
      * @param p0
      * @param normal
@@ -41,10 +46,12 @@ public class Plane implements Geometry {
         }
     }
 
+    // ***************** Getters ********************** //
+
     /**
      * get the normal
      *
-     * @return
+     * @return normal
      */
     public Vector getNormal() {
         return normal;
@@ -59,18 +66,11 @@ public class Plane implements Geometry {
         return p0;
     }
 
+    // ***************** Operations ******************** //
+
     @Override
     public Vector getNormal(Point point) {
         return getNormal();
-    }
-
-
-    @Override
-    public String toString() {
-        return "Plane{" +
-                "p0=" + p0 +
-                ", normal=" + normal +
-                '}';
     }
 
     @Override
@@ -96,5 +96,13 @@ public class Plane implements Geometry {
         }
 
         return List.of(ray.getTargetPoint(t));
+    }
+
+    @Override
+    public String toString() {
+        return "Plane{" +
+                "p0=" + p0 +
+                ", normal=" + normal +
+                '}';
     }
 }

@@ -8,13 +8,18 @@ import java.util.List;
 
 import static primitives.Util.*;
 
+/**
+ * class Tube represents tube in 3D
+ */
 public class Tube implements Geometry {
 
     private Ray axisRay;
     private double radius;
 
+    // ***************** Constructors ********************** //
+
     /**
-     * ctor get axis ray and positive radius
+     * constructor get axis ray and positive radius
      *
      * @param axisRay
      * @param radius
@@ -26,17 +31,24 @@ public class Tube implements Geometry {
         this.radius = radius;
         this.axisRay = axisRay;
     }
+
+    // ***************** Getters ********************** //
+
     public Ray getAxisRay(){
         return axisRay;
     }
     public double getRadius(){
         return radius;
     }
+
+    // ***************** Operations ******************** //
+
     @Override
     public Vector getNormal(Point point) {
 
         //get the center of the tube
         Point _0 = axisRay.getP0();
+
         //get the vector direction of the tube
         Vector _v= axisRay.getDir();
 

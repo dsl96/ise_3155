@@ -7,9 +7,13 @@ import scene.Scene;
 
 public class RayTracerBasic extends RayTracerBase {
 
+    /******************** constructor *********************/
+
     public RayTracerBasic(Scene scene) {
         super(scene);
     }
+
+    // ***************** Operations ******************** //
 
     @Override
     Color traceRay(Ray ray) {
@@ -24,8 +28,7 @@ public class RayTracerBasic extends RayTracerBase {
     }
 
     /**
-     * get point and calculate the color of the point
-     *
+     * get point in scene and calculate its color
      * @param point
      * @return
      */

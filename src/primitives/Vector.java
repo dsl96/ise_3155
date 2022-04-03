@@ -1,6 +1,11 @@
 package primitives;
 
+/**
+ * Vector class represents 3D vector
+ */
 public class Vector extends Point {
+
+    /******************** constructor *********************/
 
     /**
      * Constructor to initialize point 3D
@@ -29,6 +34,8 @@ public class Vector extends Point {
         }
     }
 
+    // ***************** Operations ******************** //
+
     /**
      * scale the vector by scalar
      *
@@ -47,10 +54,10 @@ public class Vector extends Point {
     }
 
     /**
-     * cross product
+     * calculate cross product with other vector
      *
      * @param other other vector
-     * @return
+     * @return cross product
      */
     public Vector crossProduct(Vector other) {
         return (new Vector(_xyz.d2 * other._xyz.d3 - _xyz.d3 * other._xyz.d2,
@@ -59,10 +66,10 @@ public class Vector extends Point {
     }
 
     /**
-     * dot product
+     * calculate dot product with other vector
      *
      * @param other other vector
-     * @return
+     * @return dot product
      */
     public double dotProduct(Vector other) {
         return (_xyz.d1 * other._xyz.d1) + (_xyz.d2 * other._xyz.d2) + (_xyz.d3 * other._xyz.d3);
@@ -78,18 +85,18 @@ public class Vector extends Point {
     }
 
     /**
-     * return the length Squared of the vector
+     * calculate the length Squared of the vector
      *
-     * @return
+     * @return length Squared of the vector
      */
     public double lengthSquared() {
         return (_xyz.d1 * _xyz.d1) + (_xyz.d2 * _xyz.d2) + (_xyz.d3 * _xyz.d3);
     }
 
     /**
-     * return thr length of the vector
+     * calculate the length of the vector
      *
-     * @return
+     * @return length of the vector
      */
     public double length() {
         return Math.sqrt(lengthSquared());

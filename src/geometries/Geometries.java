@@ -7,18 +7,32 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * this class contains list of geometries
+ */
 public class Geometries implements Intersectable {
 
     List<Intersectable> geometries;
 
+    // ***************** Constructors ********************** //
+
+    /**
+     * default constructor
+     */
     public Geometries() {
         this.geometries = new ArrayList<>();
     }
 
+    /**
+     * get geometries and add to the list
+     * @param geometries
+     */
     public Geometries(Intersectable... geometries) {
         this();
         add(geometries);
     }
+
+    // ***************** Operations ******************** //
 
     /**
      * add geometries to the list of geometries
@@ -30,7 +44,6 @@ public class Geometries implements Intersectable {
             this.geometries.add(geo);
         }
     }
-
 
     @Override
     public List<Point> findIntersections(Ray ray) {
