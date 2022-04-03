@@ -6,8 +6,9 @@ package geometries;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
-import geometries.*;
 import primitives.*;
+
+import java.util.List;
 
 /**
  * Testing Polygons
@@ -15,7 +16,7 @@ import primitives.*;
  * @author Dan
  *
  */
-public class PolygonTests {
+public class PolygonTest {
 
 	/**
 	 * Test method for {@link geometries.Polygon#Polygon(primitives.Point...)}.
@@ -76,5 +77,41 @@ public class PolygonTests {
 		Polygon pl = new Polygon(new Point(0, 0, 1), new Point(1, 0, 0), new Point(0, 1, 0), new Point(-1, 1, 1));
 		double sqrt3 = Math.sqrt(1d / 3);
 		assertEquals(new Vector(sqrt3, sqrt3, sqrt3), pl.getNormal(new Point(0, 0, 1)), "Bad normal to trinagle");
+	}
+
+	@Test
+	void findIntersections() {
+
+		Polygon polygon = new Polygon(new Point(3,2,3),new Point(3,-1,0),new Point(3,-4,3),new Point(3,-1,5),new Point(3,2,5));
+		List<Point> points ;
+		// ============ Equivalence Partitions Tests ==============
+
+		//TC01: Inside triangle*******************************************
+		points = polygon.findIntersections((new Ray(new Point(-1, 0.5, 0 ), new Vector(4, -0.5, 2))));
+
+		assertEquals(List.of(new Point(3,0,2)),points,"ERROR: Ray Inside when the  polygon");
+
+		//TC02: Outside against edge
+		assertNull(polygon.findIntersections((new Ray(new Point(-1, 0.5, 0), new Vector(1.5, -1.5, 2)))),
+				"Ray outside against edge");
+
+		//TC03: Outside against vertex
+		assertNull(polygon.findIntersections((new Ray(new Point(-1, 0.5, 0), new Vector(4, 2, 5.5)))),
+				"Ray  outside against vertex");
+
+
+		// =============== Boundary Values Tests ==================
+
+		//TC11: the point is on edge
+		assertNull( polygon.findIntersections((new Ray(new Point(-1, 0.5, 0), new Vector(4, 1.5, 4)))),
+				"Ray's point is on the edge");
+
+		//TC12: the point is in vertex
+		assertNull( polygon.findIntersections((new Ray(new Point(-1, 0.5, 0), new Vector(4, -1.5, 5)))),
+				"Ray's point is in vertex");
+
+		//TC13: the point is On edge's continuation
+		assertNull(polygon.findIntersections((new Ray(new Point(-1 , 0.5, 0), new Vector(4, 1.5, 6)))),
+				"Ray's point is On edge's continuation");
 	}
 }
