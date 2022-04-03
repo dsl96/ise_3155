@@ -1,4 +1,4 @@
-package unittests.renderer;
+package renderer;
 
 import org.junit.jupiter.api.Test;
 
@@ -22,9 +22,9 @@ public class RenderTests {
 	@Test
 	public void basicRenderTwoColorTest() {
 		Scene scene = new Scene("Test scene")//
-				.setAmbientLight(new AmbientLight(new Color(255, 191, 191), //
+				.setAmbientLight(new AmbientLight(new Color(24, 70, 223), //
 						                          new Double3(1,1,1))) //
-				.setBackground(new Color(75, 127, 90));
+				.setBackground(new Color(247, 255, 0));
 
 		scene.geometries.add(new Sphere( new Point(0, 0, -100),50),
 				new Triangle(new Point(-100, 0, -100), new Point(0, 100, -100), new Point(-100, 100, -100)), // up
@@ -36,11 +36,11 @@ public class RenderTests {
 		Camera camera = new Camera(Point.ZERO, new Vector(0, 0, -1), new Vector(0, 1, 0)) //
 				.setVPDistance(100) //
 				.setVPSize(500d, 500) //
-				.setImageWriter(new ImageWriter("base render test", 1000, 1000))				
+				.setImageWriter(new ImageWriter("base render test1", 1000, 1000))
 				.setRayTracer(new RayTracerBasic(scene));
 
 		camera.renderImage();
-		camera.printGrid(100, new Color(java.awt.Color.YELLOW));
+		camera.printGrid(100, new Color(java.awt.Color.RED));
 		camera.writeToImage();
 	}
 
@@ -55,7 +55,7 @@ public class RenderTests {
 
 		Camera camera = new Camera(Point.ZERO, new Vector(0, 0, -1), new Vector(0, 1, 0)) //
 				.setVPDistance(100) //
-				.setVPSize(500, 500)
+				.setVPSize(500d, 500)
 				.setImageWriter(new ImageWriter("xml render test", 1000, 1000))
 				.setRayTracer(new RayTracerBasic(scene));
 		camera.renderImage();

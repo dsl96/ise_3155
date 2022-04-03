@@ -7,7 +7,11 @@ import java.util.MissingResourceException;
 import static primitives.Util.isZero;
 
 /**
- * ////////////////////////////////////////////////////////////
+ *A camera in three-dimensional space
+ * Contains location and direction of camera and scene
+ * The camera produces an image by
+ * Creating horns to cut the scene
+ * And calculate the appropriate color
  */
 public class Camera {
     private Point p0;
@@ -72,7 +76,7 @@ public class Camera {
      * @param rayTracerBase
      * @return
      */
-    public Camera setRayTracerBase(RayTracerBase rayTracerBase) {
+    public Camera setRayTracer(RayTracerBase rayTracerBase) {
         this.rayTracerBase = rayTracerBase;
         return this;
     }
@@ -120,5 +124,84 @@ public class Camera {
         return new Ray(p0, Pij.subtract(p0));
     }
 
+    /**
+     * render the image
+     */
+    public void renderImage() {
+        //  check all camera properties Initialized
+        validProprties();
 
+        //loop on all pixels
+        for (int i = 0; i < this.imageWriter.getNy(); ++i) {
+
+            for (int j = 0; j < this.imageWriter.getNx(); ++j) {
+
+                //cunstruct ray and send to ray tracer to get color
+                var color = rayTracerBase.traceRay(constructRay(imageWriter.getNx(), imageWriter.getNy(), j, i));
+
+               // write the color in place
+                this.imageWriter.writePixel(j, i, color);
+            }
+        }
+    }
+
+    /**
+     * print grid on image
+     *
+     * @param interval
+     * @param color
+     */
+    public void printGrid(int interval, Color color) {
+
+        if (imageWriter == null)
+            throw new MissingResourceException("camera class", "imageWriter", "null");
+
+        //print grid on image
+
+        //write lines
+        for (int j = 0; j < this.imageWriter.getNx(); j += interval) {
+            for (int i = 0; i < this.imageWriter.getNy(); ++i)
+                imageWriter.writePixel(j, i, color);
+        }
+
+        // writes columns
+        for (int i = 0; i < this.imageWriter.getNy(); i += interval) {
+            for (int j = 0; j < this.imageWriter.getNx(); ++j)
+                imageWriter.writePixel(j, i, color);
+        }
+    }
+
+    /**
+     * write to image
+     * throw error if imageWriter is null
+     */
+    public void writeToImage() {
+
+        if (imageWriter == null)
+            throw new MissingResourceException("camera class", "imageWriter", "null");
+
+        imageWriter.writeToImage();
+    }
+
+
+    /**
+     * check all camera properties Initialized
+     * throw error if not
+     */
+    void validProprties() {
+        if (this.vpHeight == 0.0)
+            throw new MissingResourceException("camera class", "vpHeight", "0.0");
+
+        if (this.vpWidth == 0.0)
+            throw new MissingResourceException("camera class", "vpWidth", "0.0");
+
+        if (this.distance == 0.0)
+            throw new MissingResourceException("camera class", "distance", "0.0");
+
+        if (this.imageWriter == null)
+            throw new MissingResourceException("camera class", "imageWriter", "null");
+
+        if (this.rayTracerBase == null)
+            throw new MissingResourceException("camera class", "rayTracerBase", "null");
+    }
 }
