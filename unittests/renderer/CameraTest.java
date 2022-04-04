@@ -53,7 +53,7 @@ class CameraTest {
 
 		// BV06: 4X4 Side (0,1)
 		assertEquals(new Ray(ZERO_POINT, new Vector(1, -3, -10)),
-				camera.setVPSize(8d, 8).constructRay(4, 4, 1, 0), badRay + "34");
+				camera.setVPSize(8d, 8).constructRay(4, 4, 1, 0), badRay + "7");
 
 }
 

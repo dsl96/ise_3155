@@ -7,24 +7,45 @@ import java.util.MissingResourceException;
 import static primitives.Util.isZero;
 
 /**
- *A camera in three-dimensional space
+ * class represents camera in three-dimensional space
  * Contains location and direction of camera and scene
  * The camera produces an image by
  * Creating horns to cut the scene
  * And calculate the appropriate color
  */
 public class Camera {
+
+    //location of the camera
     private Point p0;
+
+    //directions of the camera
     private Vector vUp;
     private Vector vTo;
     private Vector vRight;
+
+    //size of the view plane
     private double vpHeight;
     private double vpWidth;
+
+    //distance of the vp from the camera
     private double distance;
+
+    //create the image write pixels and finally write the image
     private ImageWriter imageWriter;
+
+    //calculate the color of every pixel
     private RayTracerBase rayTracerBase;
 
+    /******************** constructor *********************/
+
+    /**
+     * constructor
+     * @param p0 location of the camera
+     * @param vTo direction of the camera
+     * @param vUp  up direction of the camera
+     */
     public Camera(Point p0, Vector vTo, Vector vUp) {
+
         if (!isZero(vUp.dotProduct(vTo)))
             throw new IllegalArgumentException("ERROR: vUp isn't orthogonal to vTo");
 
@@ -37,12 +58,12 @@ public class Camera {
     /******************** setters *********************/
 
     /**
-     * set width and height of the screen
+     * set width and height of the vp
      * return this for builder
      *
      * @param vpWidth
      * @param vpHeight
-     * @return
+     * @return this
      */
     public Camera setVPSize(Double vpWidth, double vpHeight) {
 
@@ -59,13 +80,13 @@ public class Camera {
      * return this for builder
      *
      * @param distance
-     * @return
+     * @return this
      */
     public Camera setVPDistance(double distance) {
         if (distance <= 0)
             throw new IllegalArgumentException("ERROR argument <=0");
-        this.distance = distance;
 
+        this.distance = distance;
         return this;
     }
 
@@ -74,7 +95,7 @@ public class Camera {
      * return this for builder
      *
      * @param rayTracerBase
-     * @return
+     * @return this
      */
     public Camera setRayTracer(RayTracerBase rayTracerBase) {
         this.rayTracerBase = rayTracerBase;
@@ -86,13 +107,12 @@ public class Camera {
      * return this for builder
      *
      * @param imageWriter
-     * @return
+     * @return this
      */
     public Camera setImageWriter(ImageWriter imageWriter) {
         this.imageWriter = imageWriter;
         return this;
     }
-
 
     /************************** getters *******************/
 
@@ -108,7 +128,17 @@ public class Camera {
         return distance;
     }
 
+    // ***************** Operations ******************** //
 
+    /**
+     * get the size of vp by pixels and specific index on vp
+     * construct ray through this pixel
+     * @param nX X size of vp
+     * @param nY Y size of vp
+     * @param j  X coordinate
+     * @param i Y coordinate
+     * @return ray through the pixel
+     */
     public Ray constructRay(int nX, int nY, int j, int i) {
 
         Point Pij = p0.add(vTo.scale(distance));
@@ -125,7 +155,11 @@ public class Camera {
     }
 
     /**
-     * render the image
+     *  loop over all pixels on vp
+     *  construct ray
+     *  find intersections
+     *  calculate the color
+     *  and write to image
      */
     public void renderImage() {
         //  check all camera properties Initialized
@@ -136,10 +170,10 @@ public class Camera {
 
             for (int j = 0; j < this.imageWriter.getNx(); ++j) {
 
-                //cunstruct ray and send to ray tracer to get color
+                //construct ray and send to ray tracer to get color
                 var color = rayTracerBase.traceRay(constructRay(imageWriter.getNx(), imageWriter.getNy(), j, i));
 
-               // write the color in place
+               // write the color in point J,I
                 this.imageWriter.writePixel(j, i, color);
             }
         }
@@ -147,9 +181,8 @@ public class Camera {
 
     /**
      * print grid on image
-     *
-     * @param interval
-     * @param color
+     * @param interval space between lines\columns
+     * @param color  color of lines\columns
      */
     public void printGrid(int interval, Color color) {
 
@@ -172,7 +205,7 @@ public class Camera {
     }
 
     /**
-     * write to image
+     * write the image
      * throw error if imageWriter is null
      */
     public void writeToImage() {

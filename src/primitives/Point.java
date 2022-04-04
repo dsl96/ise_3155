@@ -14,6 +14,8 @@ public class Point {
 
     Double3 _xyz;
 
+    /******************** constructor *********************/
+
     /**
      * Constructor to initialize point 3D
      * get three double coordinates
@@ -26,10 +28,6 @@ public class Point {
         _xyz = new Double3(x, y, z);
     }
 
-    public double getX() {
-        return _xyz.d1;
-    }
-
     /**
      * Constructor to initialize point 3D
      * get "Double3"
@@ -40,11 +38,20 @@ public class Point {
         this(double3.d1, double3.d2, double3.d3);
     }
 
+    // ***************** Getters ********************** //
+
+    //for tests only
+    public double getX() {
+        return _xyz.d1;
+    }
+
+    // ***************** Operations ******************** //
+
     /**
-     * get another point and return the distance pow2
+     * get another point and calculate the distance pow2
      *
      * @param other other point
-     * @return
+     * @return distance pow2
      */
     public double distanceSquared(Point other) {
         return (this._xyz.d1 - other._xyz.d1) * (this._xyz.d1 - other._xyz.d1) +
@@ -63,10 +70,10 @@ public class Point {
     }
 
     /**
-     * return vector from other point to this point
+     * calculate vector from other point to this point
      *
      * @param other
-     * @return
+     * @return new vector
      */
     public Vector subtract(Point other) {
         return new Vector(_xyz.subtract(other._xyz));
@@ -76,7 +83,7 @@ public class Point {
      * add vector to the point
      *
      * @param v vector to add
-     * @return
+     * @return new Point
      */
     public Point add(Vector v) {
         return new Point(_xyz.add(v._xyz));
