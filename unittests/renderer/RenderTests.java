@@ -64,5 +64,4 @@ public class RenderTests {
 		camera.writeToImage();
 	}
 	*/
-
 }
