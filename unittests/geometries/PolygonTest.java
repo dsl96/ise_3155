@@ -86,7 +86,7 @@ public class PolygonTest {
 		List<Point> points ;
 		// ============ Equivalence Partitions Tests ==============
 
-		//TC01: Inside triangle*******************************************
+		//TC01: Inside polygon*******************************************
 		points = polygon.findIntersections((new Ray(new Point(-1, 0.5, 0 ), new Vector(4, -0.5, 2))));
 
 		assertEquals(List.of(new Point(3,0,2)),points,"ERROR: Ray Inside when the  polygon");

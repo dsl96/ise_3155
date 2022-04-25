@@ -28,8 +28,8 @@ public class Triangle extends Polygon {
     // ***************** Operations ******************** //
 
     @Override
-    public List<Point> findIntersections(Ray ray) {
-        List<Point> planeIntersections = plane.findIntersections(ray);
+    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
+        List<GeoPoint> planeIntersections = plane.findGeoIntersections(ray);
         if (planeIntersections == null) return null;
 
         Point p0 = ray.getP0();
@@ -48,7 +48,7 @@ public class Triangle extends Polygon {
 
         //if all has the same sign
         if ((s1 > 0 && s2 > 0 && s3 > 0) || (s1 < 0 && s2 < 0 && s3 < 0))
-           return planeIntersections;
+            return planeIntersections.stream().map(gp->new GeoPoint(this, gp.point)).toList();
 
         return null;
     }

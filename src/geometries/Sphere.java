@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * lass Sphere represents sphere in 3D space
  */
-public class Sphere implements Geometry {
+public class Sphere extends Geometry {
 
     private Point center;
     private double radius;
@@ -48,7 +48,7 @@ public class Sphere implements Geometry {
     }
 
     @Override
-    public List<Point> findIntersections(Ray ray) {
+    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
         Point p0 = ray.getP0();
         Vector v = ray.getDir();
         Vector u;
@@ -56,7 +56,7 @@ public class Sphere implements Geometry {
         try {
             u = center.subtract(p0);   // p0 == center the ray start from the center of the sphere
         } catch (IllegalArgumentException e) {
-            return List.of( ray.getTargetPoint(this.radius));
+            return List.of( new GeoPoint(this, ray.getTargetPoint(this.radius) ));
         }
 
         double tm = alignZero(v.dotProduct(u));
@@ -77,15 +77,15 @@ public class Sphere implements Geometry {
         //2 intersections
         if (alignZero(t1) > 0 && alignZero(t2) > 0) {
             return List.of(
-                    ray.getTargetPoint(t1)
-                    ,ray.getTargetPoint(t2)); //P1 , P2
+                    new GeoPoint (this,ray.getTargetPoint(t1) )
+                    ,new GeoPoint (this,ray.getTargetPoint(t2) )); //P1 , P2
         }
 
         //1 intersection
         if (alignZero(t1) > 0)
-            return List.of(ray.getTargetPoint(t1));
+            return List.of(new GeoPoint (this,ray.getTargetPoint(t1) ));
         else
-            return List.of(ray.getTargetPoint(t2));
+            return List.of(new GeoPoint (this,ray.getTargetPoint(t2) ));
     }
 
     @Override

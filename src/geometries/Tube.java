@@ -11,7 +11,7 @@ import static primitives.Util.*;
 /**
  * class Tube represents tube in 3D
  */
-public class Tube implements Geometry {
+public class Tube extends Geometry {
 
     private Ray axisRay;
     private double radius;
@@ -62,7 +62,7 @@ public class Tube implements Geometry {
     }
 
     @Override
-    public List<Point> findIntersections(Ray ray) {
+    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
         return null;
     }
 }
