@@ -24,10 +24,11 @@ public class PointLight extends Light implements LightSource {
         this.position = position;
     }
 
+
     @Override
     public Color getIntensity(Point p) {
         double dSquared = p.distanceSquared(position);
-        double d = p.distance(position);
+        double d =  Math.sqrt(dSquared);
 
         return (getIntensity().reduce(Kc + Kl * d + Kq * dSquared));
     }
