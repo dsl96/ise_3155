@@ -122,7 +122,7 @@ public class Polygon extends Geometry {
             if (isZero(s2)) return null;
 
             //if they not the same sign
-            if( (s1 > 0 && s2<0 ) || (s1 <  0 && s2 > 0 ) )
+            if( s1 * s2 < 0  )
                 return null;
 
             v1 = v2;

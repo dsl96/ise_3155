@@ -47,7 +47,7 @@ public class Triangle extends Polygon {
         if (isZero(s3)) return null;
 
         //if all has the same sign
-        if ((s1 > 0 && s2 > 0 && s3 > 0) || (s1 < 0 && s2 < 0 && s3 < 0))
+        if (s1  * s2 > 0 && s2 *s3> 0 )
             return planeIntersections.stream().map(gp->new GeoPoint(this, gp.point)).toList();
 
         return null;
