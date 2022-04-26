@@ -161,7 +161,7 @@ public class Camera {
      *  calculate the color
      *  and write to image
      */
-    public void renderImage() {
+    public Camera renderImage() {
         //  check all camera properties Initialized
         validProprties();
 
@@ -177,6 +177,7 @@ public class Camera {
                 this.imageWriter.writePixel(j, i, color);
             }
         }
+        return this;
     }
 
     /**
