@@ -28,8 +28,8 @@ public class Triangle extends Polygon {
     // ***************** Operations ******************** //
 
     @Override
-    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
-        List<GeoPoint> planeIntersections = plane.findGeoIntersections(ray);
+    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxDistance) {
+        List<GeoPoint> planeIntersections = plane.findGeoIntersections(ray, maxDistance);
         if (planeIntersections == null) return null;
 
         Point p0 = ray.getP0();

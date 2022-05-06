@@ -48,7 +48,7 @@ public class Sphere extends Geometry {
     }
 
     @Override
-    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
+    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxDistance) {
         Point p0 = ray.getP0();
         Vector v = ray.getDir();
         Vector u;
@@ -56,6 +56,9 @@ public class Sphere extends Geometry {
         try {
             u = center.subtract(p0);   // p0 == center the ray start from the center of the sphere
         } catch (IllegalArgumentException e) {
+
+            if (alignZero(  maxDistance-this.radius) <= 0) return null;
+
             return List.of( new GeoPoint(this, ray.getTargetPoint(this.radius) ));
         }
 
@@ -71,18 +74,22 @@ public class Sphere extends Geometry {
         double t1 = alignZero(tm - th);
         double t2 = alignZero(tm + th);
 
-        //ray starts after sphere
-        if (alignZero(t1) <= 0 && alignZero(t2) <= 0) return null;
+        //bool parameter if the distance from the rey source less than max distance and  the ray not start after the point
+        boolean t1InDistance = alignZero(maxDistance - t1) > 0  && t1 > 0 ;
+        boolean t2InDistance = alignZero(maxDistance - t2) > 0 && t2 > 0;
+
+        //ray starts after sphere or far then max distance
+        if(   !t1InDistance  &&   !t2InDistance ) return null;
 
         //2 intersections
-        if (alignZero(t1) > 0 && alignZero(t2) > 0) {
+        if (  t1InDistance  && t2InDistance)   {
             return List.of(
                     new GeoPoint (this,ray.getTargetPoint(t1) )
                     ,new GeoPoint (this,ray.getTargetPoint(t2) )); //P1 , P2
         }
 
         //1 intersection
-        if (alignZero(t1) > 0)
+        if ( t1InDistance)
             return List.of(new GeoPoint (this,ray.getTargetPoint(t1) ));
         else
             return List.of(new GeoPoint (this,ray.getTargetPoint(t2) ));

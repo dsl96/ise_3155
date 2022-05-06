@@ -25,4 +25,10 @@ public class DirectionalLight extends Light implements LightSource {
     public Vector getL(Point p) {
         return direction;
     }
+
+    @Override
+    public double getDistance(Point point) {
+        //Directional Light had no location
+        return Double.POSITIVE_INFINITY;
+    }
 }
