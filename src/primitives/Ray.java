@@ -10,6 +10,11 @@ import geometries.Intersectable.GeoPoint;
  * Ray class represents 3D ray
  */
 public class Ray {
+    /**
+     * epsilon to move point from surface
+     */
+    private static final double DELTA = 0.1;
+
     private Point p0;
     private Vector dir;
 
@@ -25,6 +30,23 @@ public class Ray {
         this.dir = dir.normalize();
         this.p0 = new Point(p0._xyz);
     }
+
+    /**
+     * constructor move start point of ray by delta
+     * @param point
+     * @param direction
+     * @param normal
+     */
+    public Ray(Point point, Vector direction, Vector normal) {
+        //point + normal.scale(±DELTA)
+        dir = direction.normalize();
+
+        double nv = normal.dotProduct(direction);
+
+        Vector normalDelta = normal.scale((nv > 0 ? DELTA : -DELTA));
+        p0 = point.add(normalDelta);
+    }
+
     // ***************** Getters ********************** //
 
     public Point getP0() {
@@ -49,7 +71,7 @@ public class Ray {
 
     /**
      * this function get list of points and return the closest point
-     * to po of the ray
+     * to p0 of the ray
      * @param points
      * @return closest point to p0
      */

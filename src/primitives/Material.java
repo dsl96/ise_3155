@@ -5,8 +5,18 @@ package primitives;
  */
 public class Material {
 
+
     public Double3 Kd = Double3.ZERO;
     public Double3 Ks = Double3.ZERO;
+
+    /**
+     *  refracted index
+     */
+    public Double3 Kt = Double3.ZERO;
+    /**
+     *  reflected index
+     */
+    public Double3 Kr = Double3.ZERO;
 
     public int nShininess = 0;
 
@@ -30,6 +40,26 @@ public class Material {
 
     public Material setKs(Double3 kS) {
         this.Ks = kS;
+        return this;
+    }
+
+    public Material setKt(Double3 kt) {
+        this.Kt = kt;
+        return this;
+    }
+
+    public Material setKr(double kr) {
+        this.Kr = new Double3(kr);
+        return this;
+    }
+
+    public Material setKt(double kt) {
+        this.Kt = new Double3(kt);
+        return this;
+    }
+
+    public Material setKr(Double3 kr) {
+        this.Kr = kr;
         return this;
     }
 

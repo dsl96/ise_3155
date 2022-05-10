@@ -46,4 +46,36 @@ class GeometriesTest {
         //empty geometry
         assertNull(new Geometries().findIntersections(ray),"ERROR when empty geometry ");
     }
+    /**
+     * test Find Intersections(ray) and nax distance
+     */
+    @Test
+    void testFindIntersectionsMax() {
+        Sphere s = new Sphere(new Point(0, 0, 0), 1);
+        Triangle t1 = new Triangle(new Point(1, 1, -1), new Point(1, -1, -1), new Point(1, 0, 3));
+        Triangle t2 = new Triangle(new Point(-1, 1, -1), new Point(-1, -1, -1), new Point(-1, 0, 3));
+        Plane p1 = new Plane(new Point(1, 1, -1), new Point(1, -1, -1), new Point(1, 0, 3));
+        Plane p2 = new Plane(new Point(-1, 1, -1), new Point(-1, -1, -1), new Point(-1, 0, 3));
+        Geometries geometries = new Geometries(s,t1,t2,p1,p2);
+        Ray ray = new Ray(new Point(-50, 0, 0), new Vector(1, 0, 0));
+
+        // ============ Equivalence Partitions Tests ==============
+
+        //when max is too small
+        assertNull(geometries.findGeoIntersections(ray,40),"ERROR when max is too small");
+
+        //cross part of the geometries (3 from 6)
+        assertEquals(3,geometries.findGeoIntersections(ray,50).size(),
+                "ERROR when ray cross part of the geometries (3 from 6)");
+
+        //cross all geometries
+        assertEquals(6,geometries.findGeoIntersections(ray,60).size(),
+                "ERROR when ray cross all of the geometries (6 from 6)");
+
+        // =============== Boundary Values Tests ==================
+
+        //when max is equals to distance
+        assertNull(geometries.findGeoIntersections(ray,49),"ERROR when max is equals to distance");
+
+    }
 }
