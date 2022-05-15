@@ -1,6 +1,9 @@
 package primitives;
 
+import geometries.Plane;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
 
 import static primitives.Util.*;
 
@@ -139,5 +142,42 @@ class VectorTest {
         // test length()
         assertTrue(isZero(new Vector(0, 3, 4).length() - 5),
                 "ERROR: length() wrong value");
+    }
+
+
+    /**
+     * test create normal
+     */
+    @Test
+    void testCreateNormal() {
+
+        // ============ Equivalence Partitions Tests ==============
+        v1 = new Vector(1, 85.22, 12.36);
+        assertTrue(isZero(v1.dotProduct(v1.createNormal())), "ERROR:create normal");
+
+        // =============== Boundary Values Test ==================
+        v1 = new Vector(2025, 0, 0);
+        assertTrue(isZero(v1.dotProduct(v1.createNormal())), "ERROR:create normal 1,0,0");
+
+        v1 = new Vector(0, 1, 0);
+        assertTrue(isZero(v1.dotProduct(v1.createNormal())), "ERROR:create normal 0,1,0");
+
+        v1 = new Vector(0, 0, 1);
+        assertTrue(isZero(v1.dotProduct(v1.createNormal())), "ERROR:create normal 0,0,1");
+
+    }
+
+    @Test
+    void testGenerateBeam() {
+
+        Plane p =new Plane(new Point(0,1,0),new Point(0,0,1),new Point(0,90,7));
+        Ray ray=new Ray(new Point(-50,0,0),new Vector(1,0,0));
+
+        for (Ray r:ray.generateBeam(p.getNormal(),1,50,900)){
+            List<Point> intersection=p.findIntersections(r);
+           // System.out.println(intersection.get(0).toString()+ intersection.get(0).distance(Point.ZERO));
+            assertTrue(intersection.get(0).distance(Point.ZERO)<=1,"Eror");
+        }
+
     }
 }

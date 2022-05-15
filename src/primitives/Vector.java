@@ -1,5 +1,8 @@
 package primitives;
 
+import static primitives.Util.alignZero;
+import static primitives.Util.isZero;
+
 /**
  * Vector class represents 3D vector
  */
@@ -85,6 +88,17 @@ public class Vector extends Point {
     }
 
     /**
+     * create vector  normal to this vector
+     * @return
+     */
+    public Vector createNormal() {
+        if (isZero(this.getX()))
+            return new Vector(1, 0, 0);
+
+        return new Vector(this.getY(), -this.getX(), 0).normalize();
+    }
+
+    /**
      * calculate the length Squared of the vector
      *
      * @return length Squared of the vector
@@ -114,4 +128,6 @@ public class Vector extends Point {
     public String toString() {
         return "head= " + super.toString();
     }
+
+
 }

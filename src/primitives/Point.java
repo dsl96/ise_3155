@@ -40,9 +40,13 @@ public class Point {
 
     // ***************** Getters ********************** //
 
-    //for tests only
+
     public double getX() {
         return _xyz.d1;
+    }
+
+    public double getY() {
+        return _xyz.d2;
     }
 
     // ***************** Operations ******************** //

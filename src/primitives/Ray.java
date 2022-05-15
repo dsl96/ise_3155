@@ -2,8 +2,11 @@ package primitives;
 
 import geometries.Intersectable;
 
+import java.util.LinkedList;
 import java.util.List;
+
 import static primitives.Util.*;
+
 import geometries.Intersectable.GeoPoint;
 
 /**
@@ -21,7 +24,7 @@ public class Ray {
     /******************** constructor *********************/
 
     /**
-     *  constructor
+     * constructor
      *
      * @param p0  start point
      * @param dir direction
@@ -33,6 +36,7 @@ public class Ray {
 
     /**
      * constructor move start point of ray by delta
+     *
      * @param point
      * @param direction
      * @param normal
@@ -72,6 +76,7 @@ public class Ray {
     /**
      * this function get list of points and return the closest point
      * to p0 of the ray
+     *
      * @param points
      * @return closest point to p0
      */
@@ -84,15 +89,16 @@ public class Ray {
     /**
      * this function get list of Geopoints and return the closest GeoPoint
      * to p0 of the ray
+     *
      * @param geoPoints
      * @return closest point to p0
      */
-    public GeoPoint findClosestGeoPoint(List<GeoPoint>  geoPoints) {
+    public GeoPoint findClosestGeoPoint(List<GeoPoint> geoPoints) {
         if (geoPoints == null || geoPoints.isEmpty())
             return null;
 
         return geoPoints.stream().
-                min((p1,p2)-> Double.compare(p0.distanceSquared(p1.point),p0.distanceSquared(p2.point))).get();
+                min((p1, p2) -> Double.compare(p0.distanceSquared(p1.point), p0.distanceSquared(p2.point))).get();
     }
 
     @Override
@@ -111,4 +117,56 @@ public class Ray {
                 ", dir=" + dir +
                 '}';
     }
+
+
+    public List<Ray> generateBeam(Vector n, double radius, double distance, int numOfRays) {
+        List<Ray> rays = new LinkedList<Ray>();
+        rays.add(this);// Including the main ray
+        if (numOfRays == 1 || isZero(radius))// The component (glossy surface /diffuse glass) is turned off
+            return rays;
+
+        // the 2 vectors that create the virtual grid for the beam
+        Vector nX = dir.createNormal();
+        Vector nY = dir.crossProduct(nX);
+
+        Point centerCircle = this.getTargetPoint(distance);
+        Point randomPoint;
+        Vector v12 ;
+
+
+        double rand_x, rand_y,delta_radius=radius/(numOfRays-1);
+        double nv = n.dotProduct(dir);
+
+        for (int i = 1; i < numOfRays; i++) {
+            randomPoint=centerCircle;
+            rand_x=random(-radius,radius);
+            rand_y= Math.sqrt(radius*radius-rand_x*rand_x);
+
+            try {
+                randomPoint = randomPoint.add(nX.scale(rand_x));
+            }
+            catch (Exception ex){}
+
+            try {
+                randomPoint = randomPoint.add(nY.scale(rand_y));
+            }
+            catch (Exception ex){}
+
+
+
+            v12 = randomPoint.subtract(p0).normalize();
+
+            double nt = alignZero(n.dotProduct(v12));
+
+            if (nv * nt > 0) {
+                rays.add(new Ray(p0, v12));
+            }
+            radius-=delta_radius;
+        }
+
+        return rays;
+    }
+
+
+
 }
