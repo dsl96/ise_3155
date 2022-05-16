@@ -167,17 +167,5 @@ class VectorTest {
 
     }
 
-    @Test
-    void testGenerateBeam() {
 
-        Plane p =new Plane(new Point(0,1,0),new Point(0,0,1),new Point(0,90,7));
-        Ray ray=new Ray(new Point(-50,0,0),new Vector(1,0,0));
-
-        for (Ray r:ray.generateBeam(p.getNormal(),1,50,900)){
-            List<Point> intersection=p.findIntersections(r);
-           // System.out.println(intersection.get(0).toString()+ intersection.get(0).distance(Point.ZERO));
-            assertTrue(intersection.get(0).distance(Point.ZERO)<=1,"Eror");
-        }
-
-    }
 }

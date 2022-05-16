@@ -102,23 +102,22 @@ public class RayTracerBasic extends RayTracerBase {
      */
     private Color calcGlobalEffects(GeoPoint gp, Ray inRay, int level, Double3 k) {
         Color color = Color.BLACK;
+        Vector n = gp.geometry.getNormal(gp.point);
 
         Double3 kr = gp.geometry.getMaterial().Kr, kkr = kr.product(k);
         if ( !kkr.lowerThan( MIN_CALC_COLOR_K)){
-            Ray reflectedRay = constructReflectedRay(gp.point,inRay , gp.geometry.getNormal(gp.point)  );
-            GeoPoint reflectedPoint = findClosestIntersection(reflectedRay);
+            Ray reflectedRay = constructReflectedRay(gp.point,inRay , n );
 
-            color =reflectedPoint==null?color: color.add(calcColor(reflectedPoint, reflectedRay,level-1,kkr)
-                    .scale(kr));
+            var rays = reflectedRay.generateBeam(n,1,5,1);
+           color = color.add(calcAvarageColor(rays, level-1,kkr).scale(kr));
         }
 
         Double3 kt = gp.geometry.getMaterial().Kt, kkt = kt.product(k);
         if ( !kkt.lowerThan( MIN_CALC_COLOR_K)) {
-            Ray refractedRay = constructRefractedRay(gp.point,inRay , gp.geometry.getNormal(gp.point));
+            Ray refractedRay = constructRefractedRay(gp.point,inRay , n);
 
-            GeoPoint refractedPoint = findClosestIntersection(refractedRay);
-            color = refractedPoint==null ? color: color.add(calcColor(refractedPoint, refractedRay,level-1,kkt)
-                .scale(kt));
+            var rays = refractedRay.generateBeam(n,1,6,1);
+            color = color .add(calcAvarageColor(rays, level-1,kkt).scale(kt));
         }
         return color;
     }
@@ -234,5 +233,23 @@ public class RayTracerBasic extends RayTracerBase {
      */
     private GeoPoint findClosestIntersection(Ray ray){
         return ray.findClosestGeoPoint(scene.geometries.findGeoIntersections( ray));
+    }
+
+
+    Color calcAvarageColor(List<Ray>  rays, int level ,Double3 kkt)
+    {
+
+
+        Color color = Color.BLACK;
+        for (Ray ray : rays) {
+
+            GeoPoint intersction = findClosestIntersection(ray);
+
+            if(intersction != null)
+            color = color.add(calcColor(intersction, ray,level-1,kkt));
+
+
+        }
+        return color .reduce(rays.size());
     }
 }

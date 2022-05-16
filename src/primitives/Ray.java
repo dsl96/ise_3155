@@ -140,7 +140,7 @@ public class Ray {
         for (int i = 1; i < numOfRays; i++) {
             randomPoint=centerCircle;
             rand_x=random(-radius,radius);
-            rand_y= Math.sqrt(radius*radius-rand_x*rand_x);
+            rand_y=randomSign()* Math.sqrt(radius*radius-rand_x*rand_x);
 
             try {
                 randomPoint = randomPoint.add(nX.scale(rand_x));
