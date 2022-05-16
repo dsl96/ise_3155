@@ -129,5 +129,4 @@ public class Vector extends Point {
         return "head= " + super.toString();
     }
 
-
 }

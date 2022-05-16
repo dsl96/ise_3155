@@ -118,7 +118,14 @@ public class Ray {
                 '}';
     }
 
-
+    /**
+     * 55555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555
+     * @param n
+     * @param radius
+     * @param distance
+     * @param numOfRays
+     * @return
+     */
     public List<Ray> generateBeam(Vector n, double radius, double distance, int numOfRays) {
         List<Ray> rays = new LinkedList<Ray>();
         rays.add(this);// Including the main ray

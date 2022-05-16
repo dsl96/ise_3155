@@ -21,6 +21,14 @@ public class Material {
     public int nShininess = 0;
 
 
+
+
+    //blur glass
+    //all parameters for the beam
+    public int numOfRays=1;
+    public double blurGlassDistance=1,blurGlassRadius=1;
+
+
     // ***************** setters ********************** //
 
     public Material setKd(double kd) {
@@ -65,6 +73,18 @@ public class Material {
 
     public Material setShininess(int nShininess) {
         this.nShininess = nShininess;
+        return this;
+    }
+
+    public Material setBlurGlass(int numOfRays, double distance ,double radius) {
+
+        if(numOfRays<1 || distance<=0 ||  radius<=0)
+            throw new IllegalArgumentException("illegal argument in setBlurGlass ");
+
+        this.numOfRays = numOfRays;
+        this.blurGlassDistance=distance;
+        this.blurGlassRadius = radius;
+
         return this;
     }
 

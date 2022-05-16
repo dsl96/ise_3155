@@ -104,19 +104,22 @@ public class RayTracerBasic extends RayTracerBase {
         Color color = Color.BLACK;
         Vector n = gp.geometry.getNormal(gp.point);
 
-        Double3 kr = gp.geometry.getMaterial().Kr, kkr = kr.product(k);
+        Material gpMaterial = gp.geometry.getMaterial();
+        Double3 kr = gpMaterial.Kr, kkr = kr.product(k);
+
+
         if ( !kkr.lowerThan( MIN_CALC_COLOR_K)){
             Ray reflectedRay = constructReflectedRay(gp.point,inRay , n );
 
-            var rays = reflectedRay.generateBeam(n,1,5,1);
+            var rays = reflectedRay.generateBeam(n, gpMaterial.blurGlassRadius,gpMaterial.blurGlassDistance,gpMaterial.numOfRays);
            color = color.add(calcAvarageColor(rays, level-1,kkr).scale(kr));
         }
 
-        Double3 kt = gp.geometry.getMaterial().Kt, kkt = kt.product(k);
+        Double3 kt = gpMaterial.Kt, kkt = kt.product(k);
         if ( !kkt.lowerThan( MIN_CALC_COLOR_K)) {
             Ray refractedRay = constructRefractedRay(gp.point,inRay , n);
 
-            var rays = refractedRay.generateBeam(n,1,6,1);
+            var rays = refractedRay.generateBeam(n, gpMaterial.blurGlassRadius,gpMaterial.blurGlassDistance,gpMaterial.numOfRays);
             color = color .add(calcAvarageColor(rays, level-1,kkt).scale(kt));
         }
         return color;
