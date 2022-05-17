@@ -87,9 +87,7 @@ public class Ray {
 
 
     /**
-     * this function get list of Geopoints and return the closest GeoPoint
-     * to p0 of the ray
-     *
+     * this function get list of Geopoints
      * @param geoPoints
      * @return closest point to p0
      */
@@ -101,30 +99,13 @@ public class Ray {
                 min((p1, p2) -> Double.compare(p0.distanceSquared(p1.point), p0.distanceSquared(p2.point))).get();
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null) return false;
-        if (!(obj instanceof Ray)) return false;
-        Ray other = (Ray) obj;
-        return this.dir.equals(other.dir) && this.p0.equals(other.p0);
-    }
-
-    @Override
-    public String toString() {
-        return "Ray{" +
-                "p0=" + p0 +
-                ", dir=" + dir +
-                '}';
-    }
-
     /**
-     * 55555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555
-     * @param n
-     * @param radius
-     * @param distance
-     * @param numOfRays
-     * @return
+     *
+     * @param n          normal to the geometry
+     * @param radius     radius of the beam circle
+     * @param distance    distance of the eam circle
+     * @param numOfRays   num of rays in the beam
+     * @return list of beam rays
      */
     public List<Ray> generateBeam(Vector n, double radius, double distance, int numOfRays) {
         List<Ray> rays = new LinkedList<Ray>();
@@ -139,7 +120,6 @@ public class Ray {
         Point centerCircle = this.getTargetPoint(distance);
         Point randomPoint;
         Vector v12 ;
-
 
         double rand_x, rand_y,delta_radius=radius/(numOfRays-1);
         double nv = n.dotProduct(dir);
@@ -159,8 +139,6 @@ public class Ray {
             }
             catch (Exception ex){}
 
-
-
             v12 = randomPoint.subtract(p0).normalize();
 
             double nt = alignZero(n.dotProduct(v12));
@@ -174,6 +152,20 @@ public class Ray {
         return rays;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (!(obj instanceof Ray)) return false;
+        Ray other = (Ray) obj;
+        return this.dir.equals(other.dir) && this.p0.equals(other.p0);
+    }
 
-
+    @Override
+    public String toString() {
+        return "Ray{" +
+                "p0=" + p0 +
+                ", dir=" + dir +
+                '}';
+    }
 }

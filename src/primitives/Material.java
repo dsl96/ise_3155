@@ -13,6 +13,7 @@ public class Material {
      *  refracted index
      */
     public Double3 Kt = Double3.ZERO;
+
     /**
      *  reflected index
      */
@@ -73,6 +74,27 @@ public class Material {
 
     public Material setShininess(int nShininess) {
         this.nShininess = nShininess;
+        return this;
+    }
+
+    public Material setNumOfRays(int numOfRays) {
+        if(numOfRays<1)
+            throw new IllegalArgumentException("illegal argument in setNumOfRay ");
+        this.numOfRays = numOfRays;
+        return this;
+    }
+
+    public Material setBlurGlassDistance(double blurGlassDistance) {
+        if( blurGlassDistance<=0 )
+            throw new IllegalArgumentException("illegal argument in setBlurGlassDistance ");
+        this.blurGlassDistance = blurGlassDistance;
+        return this;
+    }
+
+    public Material setBlurGlassRadius(double blurGlassRadius) {
+        if( blurGlassRadius<=0 )
+            throw new IllegalArgumentException("illegal argument in setBlurGlassRadius ");
+        this.blurGlassRadius = blurGlassRadius;
         return this;
     }
 

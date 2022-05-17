@@ -167,6 +167,9 @@ public class Camera {
 
         //loop on all pixels
         for (int i = 0; i < this.imageWriter.getNy(); ++i) {
+           //debug
+            if(i%30==0)
+               System.out.println(i);
 
             for (int j = 0; j < this.imageWriter.getNx(); ++j) {
 

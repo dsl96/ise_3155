@@ -112,7 +112,7 @@ public class RayTracerBasic extends RayTracerBase {
             Ray reflectedRay = constructReflectedRay(gp.point,inRay , n );
 
             var rays = reflectedRay.generateBeam(n, gpMaterial.blurGlassRadius,gpMaterial.blurGlassDistance,gpMaterial.numOfRays);
-           color = color.add(calcAvarageColor(rays, level-1,kkr).scale(kr));
+           color = color.add(calcAverageColor(rays, level-1,kkr).scale(kr));
         }
 
         Double3 kt = gpMaterial.Kt, kkt = kt.product(k);
@@ -120,7 +120,7 @@ public class RayTracerBasic extends RayTracerBase {
             Ray refractedRay = constructRefractedRay(gp.point,inRay , n);
 
             var rays = refractedRay.generateBeam(n, gpMaterial.blurGlassRadius,gpMaterial.blurGlassDistance,gpMaterial.numOfRays);
-            color = color .add(calcAvarageColor(rays, level-1,kkt).scale(kt));
+            color = color .add(calcAverageColor(rays, level-1,kkt).scale(kt));
         }
         return color;
     }
@@ -238,20 +238,23 @@ public class RayTracerBasic extends RayTracerBase {
         return ray.findClosestGeoPoint(scene.geometries.findGeoIntersections( ray));
     }
 
-
-    Color calcAvarageColor(List<Ray>  rays, int level ,Double3 kkt)
+    /**
+     * get list of ray
+     * @param rays
+     * @param level
+     * @param kkt
+     * @return average color of the intersection of the rays
+     */
+    Color calcAverageColor(List<Ray>  rays, int level ,Double3 kkt)
     {
-
-
         Color color = Color.BLACK;
+
         for (Ray ray : rays) {
 
             GeoPoint intersction = findClosestIntersection(ray);
 
             if(intersction != null)
             color = color.add(calcColor(intersction, ray,level-1,kkt));
-
-
         }
         return color .reduce(rays.size());
     }
