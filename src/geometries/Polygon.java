@@ -83,6 +83,45 @@ public class Polygon extends Geometry {
                 throw new IllegalArgumentException("All vertices must be ordered and the polygon must be convex");
         }
         size = vertices.length;
+
+
+        //build a bounding box
+        //search in all vertices
+        //for the min and max X,Y,Z
+        double xMax = Double.NEGATIVE_INFINITY;
+        double xMin = Double.MAX_VALUE;
+
+        double yMax = Double.NEGATIVE_INFINITY;
+        double yMin = Double.MAX_VALUE;
+
+        double zMax = Double.NEGATIVE_INFINITY;
+        double zMin = Double.MAX_VALUE;
+
+
+        for (Point p : vertices) {
+
+            //check x
+            if (p.getX() < xMin)
+                xMin = p.getX();
+
+            if (p.getX() > xMax)
+                xMax = p.getX();
+
+             //check y
+            if (p.getY() < yMin)
+                yMin = p.getY();
+
+            if (p.getY() > yMax)
+                yMax = p.getY();
+
+            //check z
+            if (p.getZ() < zMin)
+                zMin = p.getZ();
+
+            if (p.getZ() > zMax)
+                zMax = p.getZ();
+        }
+        boundingBox = new BoundingBox(new Point(xMin,yMin,zMin), new Point(xMax,yMax,zMax));
     }
 
     @Override
@@ -92,6 +131,13 @@ public class Polygon extends Geometry {
 
     @Override
     protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxDistance) {
+
+
+        if(!boundingBox.IntersectionBox(ray))
+            return null;
+
+
+
         //get Intersections of plane
         List<GeoPoint> planeIntersections = plane.findGeoIntersections(ray, maxDistance);
         if (planeIntersections == null) return null;
@@ -122,12 +168,12 @@ public class Polygon extends Geometry {
             if (isZero(s2)) return null;
 
             //if they not the same sign
-            if( s1 * s2 < 0  )
+            if (s1 * s2 < 0)
                 return null;
 
             v1 = v2;
         }
 
-        return planeIntersections.stream().map(gp->new GeoPoint(this,gp.point)).toList();
+        return planeIntersections.stream().map(gp -> new GeoPoint(this, gp.point)).toList();
     }
 }

@@ -1,5 +1,6 @@
 package geometries;
 
+import primitives.BoundingBox;
 import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
@@ -28,6 +29,7 @@ public class Plane extends Geometry {
     public Plane(Point p0, Vector normal) {
         this.normal = normal.normalize();
         this.p0 = p0;
+        boundingBox= new BoundingBox();
     }
 
     /**
@@ -44,6 +46,7 @@ public class Plane extends Geometry {
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("your points are on the same vector");
         }
+        boundingBox= new BoundingBox();
     }
 
     // ***************** Getters ********************** //

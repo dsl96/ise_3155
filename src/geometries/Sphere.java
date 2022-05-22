@@ -1,5 +1,6 @@
 package geometries;
 
+import primitives.BoundingBox;
 import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
@@ -28,6 +29,8 @@ public class Sphere extends Geometry {
 
         this.radius = radius;
         this.center = center;
+
+        this.boundingBox = new BoundingBox(center.add(new Vector(1,1,1).scale(radius)),center.add(new Vector(-1,-1,-1).scale(radius)));
     }
 
     // ***************** Getters ********************** //
@@ -49,6 +52,15 @@ public class Sphere extends Geometry {
 
     @Override
     protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxDistance) {
+
+        if(!this.boundingBox.IntersectionBox(ray))
+            return null;
+
+
+
+
+
+
         Point p0 = ray.getP0();
         Vector v = ray.getDir();
         Vector u;

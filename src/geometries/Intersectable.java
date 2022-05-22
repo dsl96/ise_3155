@@ -1,5 +1,6 @@
 package geometries;
 
+import primitives.BoundingBox;
 import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
@@ -10,6 +11,8 @@ import java.util.List;
  * interface of Intersectable by ray
  */
 public abstract class Intersectable {
+
+    BoundingBox boundingBox;
 
     /**
      * class contain point on

@@ -49,6 +49,10 @@ public class Point {
         return _xyz.d2;
     }
 
+    public double getZ() {
+        return _xyz.d3;
+    }
+
     // ***************** Operations ******************** //
 
     /**

@@ -107,7 +107,6 @@ public class RayTracerBasic extends RayTracerBase {
         Material gpMaterial = gp.geometry.getMaterial();
         Double3 kr = gpMaterial.Kr, kkr = kr.product(k);
 
-
         if ( !kkr.lowerThan( MIN_CALC_COLOR_K)){
             Ray reflectedRay = constructReflectedRay(gp.point,inRay , n );
 
