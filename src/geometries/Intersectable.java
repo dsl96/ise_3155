@@ -12,7 +12,7 @@ import java.util.List;
  */
 public abstract class Intersectable {
 
-    BoundingBox boundingBox;
+    BoundingBox boundingBox = new BoundingBox();
 
     /**
      * class contain point on
