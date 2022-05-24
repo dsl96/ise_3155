@@ -161,7 +161,7 @@ public class Camera {
      *  calculate the color
      *  and write to image
      */
-    public Camera renderImage() {
+    public Camera renderImageOld() {
         //  check all camera properties Initialized
         validProprties();
 
@@ -180,6 +180,40 @@ public class Camera {
                 this.imageWriter.writePixel(j, i, color);
             }
         }
+        return this;
+    }
+
+    /**
+     *  loop over all pixels on vp
+     *  construct ray
+     *  find intersections
+     *  calculate the color
+     *  and write to image
+     */
+    public Camera renderImage() {
+        //  check all camera properties Initialized
+        validProprties();
+
+        int nY=this.imageWriter.getNy();
+        int nX=this.imageWriter.getNx();
+        double printInterval =0.1;
+        int threadsCount=3;
+
+        //loop on all pixels
+        Pixel.initialize(nY, nX, printInterval);
+        while (threadsCount-- > 0) {
+            new Thread(() -> {
+                for (Pixel pixel = new Pixel(); pixel.nextPixel(); Pixel.pixelDone()) {
+                    // castRay(nX, nY, pixel.col, pixel.row);
+                    //construct ray and send to ray tracer to get color
+                    var color = rayTracerBase.traceRay(constructRay( nX,  nY,  pixel.col, pixel.row));
+                    // write the color in point J,I
+                    this.imageWriter.writePixel(pixel.col, pixel.row, color);
+                }
+            }).start();
+        }
+        Pixel.waitToFinish();
+
         return this;
     }
 
